@@ -1,4 +1,16 @@
 <template>
-  <h1 class="text-3xl font-bold ">Hello world Categories</h1>
+  <div>
+    <main-menu />
+  </div>
 </template>
 
+<script>
+import MainMenu from './components/MainMenu.vue';
+
+export default {
+  name: "App",
+  components: {
+    MainMenu
+  }
+}
+</script>
