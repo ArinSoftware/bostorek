@@ -12,18 +12,6 @@ const bookSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    description: {
-      type: String,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
     pageNumber: {
       type: Number,
       min: 1,
@@ -97,3 +85,39 @@ const bookSchema = new mongoose.Schema({
 const Book = mongoose.model('Book', bookSchema);
 
 module.exports = Book; */
+
+/* import mongoose from 'mongoose';
+
+const bookSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    authors: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    description: {
+      type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+    pageNumber: {
+      type: Number,
+      min: 1,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Book', bookSchema); */
