@@ -1,24 +1,38 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+    },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email address!`,
+      },
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required'],
+      minlength: [4, 'Password must be at least 4 characters long'],
+      maxlength: [10, 'Password cannot be more than 8 characters long'],
+    },
+    roles: {
+      type: [String],
+      enum: ['admin', 'user'],
+      default: ['user'],
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    enum: ['admin', 'user'],
-    default: 'user',
-  },
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;
