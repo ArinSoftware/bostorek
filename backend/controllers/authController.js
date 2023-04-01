@@ -10,9 +10,17 @@ const register = async (req, res) => {
     // Create a new user and save it to the database
     const user = await User.create({ ...req.body });
 
+    // Create token
+    const token = user.generateAuthToken();
+
     res
       .status(201)
-      .json({ success: true, message: 'User registered successfully', user });
+      .json({
+        success: true,
+        message: 'User registered successfully',
+        user,
+        token,
+      });
   } catch (error) {
     res
       .status(500)
