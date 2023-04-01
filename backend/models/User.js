@@ -58,6 +58,15 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
+// Check if the entered password matches the hashed password in the database
+userSchema.methods.isValidPassword = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
