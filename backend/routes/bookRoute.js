@@ -6,12 +6,15 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(
-    authMiddleware.isLoggedIn,
-    authMiddleware.isAdmin,
-    bookController.createBook
-  )
+  .post(authMiddleware.isLoggedIn, bookController.createBook)
   .get(bookController.getAllBooks);
+
+// Endpoint to get all books related to the logged-in user
+router.get(
+  '/user',
+  authMiddleware.isLoggedIn,
+  bookController.getAllBooksByUser
+);
 
 router
   .route('/:id')

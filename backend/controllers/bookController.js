@@ -1,10 +1,47 @@
+import Book from '../models/Book.js';
+
 /**
  * @desc    Get all books
  * @route   GET /api/v1/books/
  * @access  Public
  **/
 const getAllBooks = async (req, res) => {
-  res.send('get all books');
+  try {
+    const books = await Book.find().populate('user', 'name email');
+    res
+      .status(200)
+      .json({ success: true, message: 'get all books successfully', books });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: 'error at get all books', error });
+  }
+};
+
+/**
+ * @desc    Get all books by user
+ * @route   GET /api/v1/books/
+ * @access  Private
+ **/
+
+const getAllBooksByUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    console.log('userId', userId);
+    const books = await Book.find({ user: userId }).populate('user');
+    console.log('books', books);
+    res.status(200).json({
+      success: true,
+      message: 'get all books by user successfully',
+      books,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'error at get all books by user',
+      error,
+    });
+  }
 };
 
 /**
@@ -22,7 +59,22 @@ const getABook = async (req, res) => {
  * @access  Private
  **/
 const createBook = async (req, res) => {
-  res.send('create book');
+  try {
+    //add user id to req.body
+    req.body.user = req.user._id;
+
+    const book = await Book.create({ ...req.body });
+
+    res.status(201).json({
+      success: true,
+      message: 'Book registered successfully',
+      book,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: 'Error at create book', error });
+  }
 };
 
 /**
@@ -43,4 +95,11 @@ const deleteBook = async (req, res) => {
   res.send('delete book');
 };
 
-export { getAllBooks, getABook, createBook, updateBook, deleteBook };
+export {
+  getAllBooks,
+  getABook,
+  createBook,
+  updateBook,
+  deleteBook,
+  getAllBooksByUser,
+};

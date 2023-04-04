@@ -1,123 +1,44 @@
 import mongoose from 'mongoose';
 
-const bookSchema = new mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const bookSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, 'Title is required'],
     },
-    authors: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    pageNumber: {
-      type: Number,
-      min: 1,
-    },
-  },
-  { timestamps: true }
-);
-
-module.exports = mongoose.model('Book', bookSchema);
-
-/* const mongoose = require('mongoose');
-
-const bookSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  authors: [{
-    type: String,
-    required: true,
-  }],
-  description: {
-    type: String,
-    required: true,
-  },
-  image: String,
-  status: {
-    type: String,
-    enum: ['pending', 'approved', 'rejected'],
-    default: 'pending',
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  comments: [{
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    content: {
+    author: {
       type: String,
-      required: true,
+      required: [true, 'Author is required'],
     },
-    likes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    }],
-    dislikes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    }],
-  }],
-  ratings: [{
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    value: {
-      type: Number,
-      min: 1,
-      max: 5,
-      required: true,
-    },
-  }],
-}, { timestamps: true });
-
-const Book = mongoose.model('Book', bookSchema);
-
-module.exports = Book; */
-
-/* import mongoose from 'mongoose';
-
-const bookSchema = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
-    authors: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
     description: {
       type: String,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
+    rating: {
+      type: Number,
+      min: 0,
+      max: 5,
+      default: 0,
     },
     pageNumber: {
       type: Number,
       min: 1,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    /*     comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ], */
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Book', bookSchema); */
+const Book = mongoose.model('Book', bookSchema);
+
+export default Book;
