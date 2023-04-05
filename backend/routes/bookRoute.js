@@ -19,7 +19,15 @@ router.get(
 router
   .route('/:id')
   .get(bookController.getABook)
-  .put(authMiddleware.isLoggedIn, bookController.updateBook)
-  .delete(authMiddleware.isLoggedIn, bookController.deleteBook);
+  .put(
+    authMiddleware.isLoggedIn,
+    authMiddleware.isOwner,
+    bookController.updateBook
+  )
+  .delete(
+    authMiddleware.isLoggedIn,
+    authMiddleware.isOwner,
+    bookController.deleteBook
+  );
 
 export default router;

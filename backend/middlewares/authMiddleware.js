@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Book from '../models/Book.js';
 
 const isLoggedIn = async (req, res, next) => {
   try {
@@ -14,8 +15,6 @@ const isLoggedIn = async (req, res, next) => {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-
-    console.log('DECODED', jwt.verify(token, process.env.JWT_SECRET_KEY));
 
     req.user = await User.findById(
       jwt.verify(token, process.env.JWT_SECRET_KEY)._id
@@ -47,4 +46,28 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-export { isLoggedIn, isAdmin };
+const isOwner = async (req, res, next) => {
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'book not found' });
+    }
+    if (book.user.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ success: false, message: 'Not authorized' });
+    }
+    req.book = book;
+    next();
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'error at isOwner' });
+  }
+};
+
+export { isLoggedIn, isAdmin, isOwner };

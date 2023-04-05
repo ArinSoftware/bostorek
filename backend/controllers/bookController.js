@@ -50,7 +50,27 @@ const getAllBooksByUser = async (req, res) => {
  * @access  Public
  **/
 const getABook = async (req, res) => {
-  res.send('get a a book');
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'book not found' });
+    }
+    return res.json({
+      success: true,
+      message: 'book info received successfully',
+      book,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'error at get a book',
+      error,
+    });
+  }
 };
 
 /**
@@ -83,7 +103,27 @@ const createBook = async (req, res) => {
  * @access  Private
  **/
 const updateBook = async (req, res) => {
-  res.send('update book');
+  try {
+    console.log('req.user', req.user);
+
+    const { title, author, description, pageNumber } = req.body;
+    const book = req.book;
+
+    book.title = title || book.title;
+    book.author = author || book.author;
+    book.description = description || book.description;
+    book.pageNumber = pageNumber || book.pageNumber;
+    await book.save();
+    return res.json({
+      success: true,
+      message: 'Book updated successfully',
+      book,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: 'error at book update', error });
+  }
 };
 
 /**
@@ -92,7 +132,16 @@ const updateBook = async (req, res) => {
  * @access  Private
  **/
 const deleteBook = async (req, res) => {
-  res.send('delete book');
+  try {
+    const book = req.book;
+    await Book.findByIdAndRemove(book._id);
+    return res.json({ success: true, message: 'Book deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'error at book delete', error });
+  }
 };
 
 export {
