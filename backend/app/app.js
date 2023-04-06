@@ -3,6 +3,7 @@ import morgan from 'morgan';
 /* import cookieParser from 'cookie-parser'; */
 import bookRoute from '../routes/bookRoute.js';
 import authRoute from '../routes/authRoute.js';
+import commentRoute from '../routes/commentRoute.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //Routes
+app.use('/api/v1/comments', commentRoute);
 app.use('/api/v1/books', bookRoute);
 app.use('/api/v1/auth', authRoute);
 

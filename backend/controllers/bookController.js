@@ -27,9 +27,7 @@ const getAllBooks = async (req, res) => {
 const getAllBooksByUser = async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log('userId', userId);
     const books = await Book.find({ user: userId }).populate('user');
-    console.log('books', books);
     res.status(200).json({
       success: true,
       message: 'get all books by user successfully',
@@ -104,8 +102,6 @@ const createBook = async (req, res) => {
  **/
 const updateBook = async (req, res) => {
   try {
-    console.log('req.user', req.user);
-
     const { title, author, description, pageNumber } = req.body;
     const book = req.book;
 

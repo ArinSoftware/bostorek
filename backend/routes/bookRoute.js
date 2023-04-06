@@ -1,6 +1,7 @@
 import express from 'express';
 import * as bookController from '../controllers/bookController.js';
 import * as authMiddleware from '../middlewares/authMiddleware.js';
+import * as commentController from '../controllers/commentController.js';
 
 const router = express.Router();
 
@@ -29,5 +30,10 @@ router
     authMiddleware.isOwner,
     bookController.deleteBook
   );
+
+// Comment routes
+router
+  .route('/:id/comments')
+  .post(authMiddleware.isLoggedIn, commentController.createComment);
 
 export default router;
