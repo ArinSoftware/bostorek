@@ -1,20 +1,28 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Book from '../models/Book.js';
+import Comment from '../models/Comment.js';
 
 const isLoggedIn = async (req, res, next) => {
   try {
+    let token;
+
     const isTokenAvailable =
       req.headers.authorization &&
       req.headers.authorization.startsWith('Bearer ');
 
     if (!isTokenAvailable) {
-      return res
-        .status(401)
-        .json({ success: false, message: 'Unauthorized: No available token' });
+      if (req.cookies.token) {
+        token = req.cookies.token;
+      } else {
+        return res.status(401).json({
+          success: false,
+          message: 'Unauthorized: No available token',
+        });
+      }
+    } else {
+      token = req.headers.authorization.split(' ')[1];
     }
-
-    const token = req.headers.authorization.split(' ')[1];
 
     req.user = await User.findById(
       jwt.verify(token, process.env.JWT_SECRET_KEY)._id
@@ -70,4 +78,31 @@ const isOwner = async (req, res, next) => {
   }
 };
 
-export { isLoggedIn, isAdmin, isOwner };
+const isCommentator = async (req, res, next) => {
+  try {
+    const commentId = req.params.id;
+    const comment = await Comment.findById(commentId);
+
+    console.log('COMMENTOO', comment);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'comment not found' });
+    }
+
+    if (comment.creator.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ success: false, message: 'Not authorized' });
+    }
+    req.comment = comment;
+    next();
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'error at isCommentator' });
+  }
+};
+
+export { isLoggedIn, isAdmin, isOwner, isCommentator };

@@ -17,6 +17,7 @@ const commentSchema = new Schema(
     },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     dislikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    approved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-/* import cookieParser from 'cookie-parser'; */
+import cookieParser from 'cookie-parser';
 import bookRoute from '../routes/bookRoute.js';
 import authRoute from '../routes/authRoute.js';
 import commentRoute from '../routes/commentRoute.js';
@@ -8,7 +8,7 @@ import commentRoute from '../routes/commentRoute.js';
 const app = express();
 
 // Use the cookie-parser middleware
-/* app.use(cookieParser()); */
+app.use(cookieParser());
 
 app.use(morgan('dev'));
 

@@ -15,10 +15,10 @@ const register = async (req, res) => {
 
     res
       .status(201)
-      /*       .cookie('jwt', token, {
+      .cookie('jwt', token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
-      }) */
+      })
       .json({
         success: true,
         message: 'User registered successfully',
@@ -60,7 +60,13 @@ const login = async (req, res) => {
     // Generate a JWT token for the user
     const token = user.generateAuthToken();
 
-    res.status(200).json({ success: true, token });
+    res
+      .status(200)
+      .cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+      })
+      .json({ success: true, token });
   } catch (error) {
     res
       .status(500)
@@ -68,4 +74,27 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+/**
+ * @desc    Logout user / clear cookie
+ * @route   GET /api/v1/auth/login
+ * @access  Private
+ **/
+const logout = async (req, res) => {
+  try {
+    // Invalidate the user's JWT token
+    res
+      .status(200)
+      .cookie('token', '', {
+        httpOnly: true,
+        expires: new Date(0),
+      })
+
+      .json({ success: true, message: 'User successfully logged out.' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: 'Error at user logout', error });
+  }
+};
+
+export { register, login, logout };

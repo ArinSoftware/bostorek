@@ -4,6 +4,20 @@ import * as authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
+router
+  .route('/:id')
+  .get(commentController.getAComment)
+  .put(
+    authMiddleware.isLoggedIn,
+    authMiddleware.isCommentator,
+    commentController.updateComment
+  )
+  .delete(
+    authMiddleware.isLoggedIn,
+    authMiddleware.isCommentator,
+    commentController.deleteComment
+  );
+
 /* 
 Comments Endpoints:
 

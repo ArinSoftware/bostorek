@@ -34,6 +34,7 @@ router
 // Comment routes
 router
   .route('/:id/comments')
-  .post(authMiddleware.isLoggedIn, commentController.createComment);
+  .post(authMiddleware.isLoggedIn, commentController.createComment)
+  .get(authMiddleware.isLoggedIn, commentController.getAllComments);
 
 export default router;
