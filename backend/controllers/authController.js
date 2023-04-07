@@ -60,13 +60,7 @@ const login = async (req, res) => {
     // Generate a JWT token for the user
     const token = user.generateAuthToken();
 
-    res
-      .status(200)
-      /*       .cookie('token', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
-      }) */
-      .json({ success: true, token });
+    res.status(200).json({ success: true, token });
   } catch (error) {
     res
       .status(500)
