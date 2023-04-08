@@ -140,6 +140,49 @@ const deleteBook = async (req, res) => {
   }
 };
 
+const rateBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    const { value } = req.body;
+
+    if (!value || value < 0 || value > 10) {
+      return res.status(400).json({ message: 'Invalid rating value' });
+    }
+
+    const userRating = book.ratings.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (userRating) {
+      return res
+        .status(400)
+        .json({ message: 'You have already rated this book' });
+    }
+
+    book.ratings.push({ user: req.user._id, value });
+    await book.save();
+
+    const ratingsCount = book.ratings.length;
+    const ratingsSum = book.ratings.reduce((acc, cur) => acc + cur.value, 0);
+    const avgRating = ratingsCount > 0 ? ratingsSum / ratingsCount : 0;
+
+    book.rating = avgRating;
+    await book.save();
+
+    res
+      .status(201)
+      .json({ message: 'Rating added successfully', rating: avgRating });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export {
   getAllBooks,
   getABook,
@@ -147,4 +190,5 @@ export {
   updateBook,
   deleteBook,
   getAllBooksByUser,
+  rateBook,
 };

@@ -37,4 +37,8 @@ router
   .post(authMiddleware.isLoggedIn, commentController.createComment)
   .get(authMiddleware.isLoggedIn, commentController.getAllComments);
 
+router
+  .route('/:id/rate')
+  .post(authMiddleware.isLoggedIn, bookController.rateBook);
+
 export default router;

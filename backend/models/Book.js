@@ -18,8 +18,8 @@ const bookSchema = new Schema(
     rating: {
       type: Number,
       min: 0,
-      max: 5,
-      default: 0,
+      max: 10,
+      default: null,
     },
     pageNumber: {
       type: Number,
@@ -33,6 +33,21 @@ const bookSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Comment',
+      },
+    ],
+    ratings: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+        value: {
+          type: Number,
+          required: true,
+          min: 0,
+          max: 10,
+        },
       },
     ],
   },
