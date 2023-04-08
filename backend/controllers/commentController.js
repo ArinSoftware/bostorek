@@ -8,7 +8,7 @@ import Comment from '../models/Comment.js';
 const createComment = async (req, res) => {
   try {
     //add user (commentator) id to req.body
-    req.body.book = req.params.id;
+    req.body.book = req.params.bookId;
     req.body.creator = req.user._id;
 
     const comment = await Comment.create({ ...req.body });
@@ -107,7 +107,6 @@ const updateComment = async (req, res) => {
  * @access  Private
  **/
 const deleteComment = async (req, res) => {
-  console.log('deleteCommentdeleteComment');
   try {
     const comment = req.comment;
     await Comment.findByIdAndRemove(comment._id);
@@ -120,10 +119,86 @@ const deleteComment = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Like a comment
+ * @route   Post /api/v1/commentss/:id/like
+ * @access  Private
+ **/
+const likeComment = async (req, res) => {
+  const { commentId } = req.params;
+  const userId = req.user._id;
+
+  try {
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'Comment not found' });
+    }
+
+    if (comment.likes.includes(userId)) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Comment already liked by user' });
+    }
+
+    if (comment.dislikes.includes(userId)) {
+      comment.dislikes.pull(userId);
+    }
+
+    comment.likes.push(userId);
+    await comment.save();
+
+    res.json(comment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+/**
+ * @desc    Dislike a comment
+ * @route   Post /api/v1/commentss/:id/dislike
+ * @access  Private
+ **/
+const dislikeComment = async (req, res) => {
+  const { commentId } = req.params;
+  const userId = req.user._id;
+
+  try {
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'Comment not found' });
+    }
+
+    if (comment.dislikes.includes(userId)) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Comment already disliked by user' });
+    }
+
+    if (comment.likes.includes(userId)) {
+      comment.likes.pull(userId);
+    }
+
+    comment.dislikes.push(userId);
+    await comment.save();
+
+    res.json(comment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
 export {
   createComment,
   getAllComments,
   getAComment,
   updateComment,
   deleteComment,
+  likeComment,
+  dislikeComment,
 };

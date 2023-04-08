@@ -5,7 +5,7 @@ import * as authMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 router
-  .route('/:id')
+  .route('/:commentId')
   .get(commentController.getAComment)
   .put(
     authMiddleware.isLoggedIn,
@@ -18,23 +18,12 @@ router
     commentController.deleteComment
   );
 
-/* 
-Comments Endpoints:
+router
+  .route('/:commentId/like')
+  .post(authMiddleware.isLoggedIn, commentController.likeComment);
 
-Create a new comment: POST /api/v1/books/:bookId/comments
-Retrieve all comments for a book: GET /api/v1/books/:bookId/comments
-Retrieve a single comment by ID: GET /api/v1/comments/:commentId
-Update a comment by ID: PATCH /api/v1/comments/:commentId
-Delete a comment by ID: DELETE /api/v1/comments/:commentId
-Books Endpoints:
-
-Create a new book: POST /api/v1/books
-Retrieve all books: GET /api/v1/books
-Retrieve a single book by ID: GET /api/v1/books/:bookId
-Update a book by ID: PATCH /api/v1/books/:bookId
-Delete a book by ID: DELETE /api/v1/books/:bookId
-
-
-*/
+router
+  .route('/:commentId/dislike')
+  .post(authMiddleware.isLoggedIn, commentController.dislikeComment);
 
 export default router;

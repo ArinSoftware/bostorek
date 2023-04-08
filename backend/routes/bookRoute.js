@@ -18,7 +18,7 @@ router.get(
 );
 
 router
-  .route('/:id')
+  .route('/:bookId')
   .get(bookController.getABook)
   .put(
     authMiddleware.isLoggedIn,
@@ -33,12 +33,12 @@ router
 
 // Comment routes
 router
-  .route('/:id/comments')
+  .route('/:bookId/comments')
   .post(authMiddleware.isLoggedIn, commentController.createComment)
   .get(authMiddleware.isLoggedIn, commentController.getAllComments);
 
 router
-  .route('/:id/rate')
+  .route('/:bookId/rate')
   .post(authMiddleware.isLoggedIn, bookController.rateBook);
 
 export default router;

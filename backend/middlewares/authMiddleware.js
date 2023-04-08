@@ -56,7 +56,7 @@ const isAdmin = (req, res, next) => {
 
 const isOwner = async (req, res, next) => {
   try {
-    const bookId = req.params.id;
+    const bookId = req.params.bookId;
     const book = await Book.findById(bookId);
     if (!book) {
       return res
@@ -80,10 +80,8 @@ const isOwner = async (req, res, next) => {
 
 const isCommentator = async (req, res, next) => {
   try {
-    const commentId = req.params.id;
+    const commentId = req.params.commentId;
     const comment = await Comment.findById(commentId);
-
-    console.log('COMMENTOO', comment);
     if (!comment) {
       return res
         .status(404)
