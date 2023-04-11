@@ -3,11 +3,9 @@
     <div class="container flex mx-auto items-center justify-between">
       <h1 class="text-white text-2xl font-bold">Bostorek</h1>
       <ul class="flex">
-        <li><a href="#" class="px-3 py-3 text-white">Home</a></li>
-        <li><a href="#" class="px-3 py-3 text-white">About</a></li>
-        <li><a href="#" class="px-3 py-3 text-white">Categories</a></li>
-        <li><a href="#" class="px-3 py-3 text-white">Blog</a></li>
-        <li><a href="#" class="px-3 py-3 text-white">Contact Us</a></li>
+        <li class="px-4 last:px-0 last:pl-4" v-for="menuItem in menuItems" :key="menuItem">
+          <a href="#" class="px-3 py-3 last:px-0 last:pl-3 text-white">{{ menuItem }}</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -15,7 +13,18 @@
 
 <script>
 export default {
-  name: "MainMenu"
+  name: "MainMenu",
+  data() {
+    return {
+      menuItems: [
+        "Home",
+        "About",
+        "Books",
+        "Contact",
+        "Login"
+      ]
+    }
+  }
 }
 </script>
 

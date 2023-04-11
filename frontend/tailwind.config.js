@@ -10,7 +10,7 @@ module.exports = {
       },
       colors: {
         'bost-blue': '#1E3346',
-        'bost-green': '#77B89D',
+        'bost-green': '#44B89D',
         'bost-black': '#0C0C0C',
         'bost-grey': '#F5F6F9'
       }

@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <main-menu />
-    <slider />
-  </div>
+  <main-menu />
+  <the-hero />
 </template>
 
 <script>
-import MainMenu from './components/MainMenu.vue';;
-import Slider from "./components/Slider.vue"
+import MainMenu from '@/components/MainMenu.vue';
+import TheHero from "@/components/TheHero.vue";
 
 export default {
   name: "App",
   components: {
-    MainMenu, Slider
+    MainMenu, TheHero
   }
 }
 </script>
