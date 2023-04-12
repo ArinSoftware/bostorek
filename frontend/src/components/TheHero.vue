@@ -6,7 +6,7 @@
         <h1 class="text-5xl font-bold mb-4">For All Your Reading Needs</h1>
         <p class=" mb-8">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem
           deserunt quo quidem ad optio.</p>
-        <primary-button />
+        <primary-button text="Read More" />
       </div>
       <div class="flex-1 p-8">
         <img src="../assets/images/slider-img.png" alt="your-image-alt" class="h-full mx-auto my-auto">
