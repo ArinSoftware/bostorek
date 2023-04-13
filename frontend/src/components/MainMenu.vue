@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-bost-blue py-3 px-4">
+  <nav class="bg-bost-blue py-5 px-4">
     <div class="container flex mx-auto items-center justify-between">
       <h1 class="text-white text-2xl font-bold">Bostorek</h1>
       <ul class="flex">

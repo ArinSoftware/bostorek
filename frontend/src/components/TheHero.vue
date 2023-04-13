@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-bost-grey flex items-center" style="height: calc(100vh - 56px);">
+  <div class="bg-bost-grey flex items-center" style="height: calc(100vh - 72px);">
     <div class="container mx-auto flex items-center justify-between">
       <div class="flex-1 p-8">
         <h2 class="text-xl font-bold mb-2">Small Title</h2>
