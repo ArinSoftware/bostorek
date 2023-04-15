@@ -1,12 +1,16 @@
 <template>
   <div>
-    HOME VIEW
+    <the-hero />
   </div>
 </template>
 
 <script>
+import TheHero from '../components/TheHero.vue';
 export default {
-  name: "HomeView"
+  name: "HomeView",
+  components: {
+    TheHero
+  }
 }
 </script>
 
