@@ -39,25 +39,10 @@
           <div class="flex flex-wrap items-top mb-6">
             <div class="w-full lg:w-4/12 px-4 ml-auto">
               <ul class="list-unstyled">
-                <li>
-                  <a class="text-white hover:text-bost-green block pb-2"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">Home</a>
-                </li>
-                <li>
-                  <a class="text-white hover:text-bost-green block pb-2"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">About</a>
-                </li>
-                <li>
-                  <a class="text-white hover:text-bost-green block pb-2"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">Books</a>
-                </li>
-                <li>
-                  <a class="text-white hover:text-bost-green block pb-2"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">Contact</a>
-                </li>
-                <li>
-                  <a class="text-white hover:text-bost-green block pb-2"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile">Login</a>
+                <li v-for="menuItem in menuItems" :key="menuItem.text">
+                  <router-link class="text-white hover:text-bost-green block pb-2" :to="menuItem.link">
+                    {{ menuItem.text }}
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -78,7 +63,18 @@
 
 <script>
 export default {
-  name: "TheFooter"
+  name: "TheFooter",
+  data() {
+    return {
+      menuItems: [
+        { text: "Home", link: "/" },
+        { text: "About", link: "/about" },
+        { text: "Books", link: "/books" },
+        { text: "Contact", link: "/contact" },
+        { text: "Login", link: "/login" },
+      ]
+    }
+  }
 }
 </script>
 
