@@ -1,6 +1,7 @@
 <template>
   <div>
     <the-hero />
+    <button @click="increment">Increment</button>
   </div>
 </template>
 
@@ -10,6 +11,12 @@ export default {
   name: "HomeView",
   components: {
     TheHero
+  },
+  methods: {
+    increment() {
+      this.$store.commit('increment')
+      console.log(this.$store.state.count)
+    }
   }
 }
 </script>

@@ -3,6 +3,7 @@ import App from './App.vue'
 import './assets/styles.css'
 
 import router from './router'
+import store from './store'
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -20,6 +21,5 @@ library.add(faInstagram)
 library.add(faYoutube)
 
 const app = createApp(App)
-app.component('font-awesome-icon', FontAwesomeIcon)
-app.use(router)
-app.mount('#app')
+
+app.use(router).use(store).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
