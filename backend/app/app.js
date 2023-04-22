@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bookRoute from '../routes/bookRoute.js';
 import authRoute from '../routes/authRoute.js';
@@ -11,6 +12,9 @@ const app = express();
 app.use(cookieParser());
 
 app.use(morgan('dev'));
+
+//Enable All CORS Requests
+app.use(cors());
 
 // Use built-in middleware to parse JSON-encoded request bodies
 app.use(express.json());

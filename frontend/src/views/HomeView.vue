@@ -1,23 +1,16 @@
 <template>
-  <div>
-    <the-hero />
-    <button @click="increment">Increment</button>
-  </div>
+  <the-hero />
+  <book-list />
 </template>
 
 <script>
-import TheHero from '../components/TheHero.vue';
+import TheHero from '@/components/TheHero.vue';
+import BookList from '@/components/books/BookList.vue';
 export default {
   name: "HomeView",
   components: {
-    TheHero
+    TheHero, BookList
   },
-  methods: {
-    increment() {
-      this.$store.commit('increment')
-      console.log(this.$store.state.count)
-    }
-  }
 }
 </script>
 

@@ -6,14 +6,14 @@
         class="absolute left-4 bottom-0 px-6 py-1 text-white bg-bost-blue rounded-full border-2 border-white flex justify-center items-center text-center transform translate-y-1/2">
         <h4 class="text-white text-lg font-semibold">
           <span>
-            19 January 2021
+            {{ book.updatedAt }}
           </span>
         </h4>
       </div>
     </div>
     <div class="p-4">
       <h5 class="text-lg font-bold text-bost-black mb-2 mt-2">
-        Eius, dolor? Vel velit sed doloremque
+        {{ book.title }}
       </h5>
       <p class="text-bost-black leading-relaxed mb-4">
         Incidunt magni explicabo ullam ipsa quo consequuntur eveniet illo? Aspernatur nam dolorem a neque? Esse
@@ -28,7 +28,10 @@
 
 <script>
 export default {
-  name: "BookItem"
+  name: "BookItem",
+  props: {
+    book: Object
+  }
 }
 </script>
 

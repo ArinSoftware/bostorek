@@ -1,10 +1,5 @@
 <template>
-  <!-- component -->
-  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
-  <link rel="stylesheet"
-    href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
-
-  <footer class="relative bg-bost-blue pt-8">
+  <footer class="bg-bost-blue pt-8">
     <div class="container mx-auto px-4">
       <div class="flex flex-wrap text-left lg:text-left">
         <div class="w-full lg:w-6/12 px-4">
@@ -49,7 +44,7 @@
           </div>
         </div>
       </div>
-      <hr class="my-4 border-blueGray-300">
+      <hr class="my-4 border-bost-grey">
       <div class="flex flex-wrap items-center md:justify-between justify-center">
         <div class="w-full md:w-4/12 px-4 mx-auto text-center">
           <div class="text-sm text-bost-grey font-semibold mb-4">
