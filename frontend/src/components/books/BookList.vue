@@ -11,7 +11,6 @@ export default {
   components: { BookItem },
   computed: {
     books() {
-      console.log("this.$store.state.books", this.$store.state.books)
       return this.$store.state.books
     }
   },

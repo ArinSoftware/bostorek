@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-500">
     <div class="relative">
       <img src="@/assets/images/book_small.jpg" alt="" class="w-full">
       <div
@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="p-4">
-      <h5 class="text-lg font-bold text-bost-black mb-2 mt-2">
-        {{ book.title }}
+      <h5 class="text-lg font-bold text-bost-black mb-1 mt-4">
+        {{ book.title }} - {{ book.author }}
       </h5>
       <p class="text-bost-black leading-relaxed mb-4">
         Incidunt magni explicabo ullam ipsa quo consequuntur eveniet illo? Aspernatur nam dolorem a neque? Esse
