@@ -11,11 +11,11 @@ export default {
   components: { BookItem },
   computed: {
     books() {
-      return this.$store.state.books
+      return this.$store.state.book.items
     }
   },
   mounted() {
-    this.$store.dispatch('fetchBooks')
+    this.$store.dispatch('book/fetchBooks')
   }
 }
 </script>
