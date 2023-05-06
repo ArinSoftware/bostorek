@@ -1,5 +1,3 @@
-// store/modules/auth.js
-
 import axios from 'axios'
 
 const state = {
@@ -18,8 +16,12 @@ const mutations = {
 
 const actions = {
   async register({ commit }, { username, email, password }) {
+    console.log('action register')
+
     commit('setRegisterError', null)
     commit('setRegistering', true)
+
+    console.log('USERNAME', username)
 
     try {
       const response = await axios.post('http://localhost:3000/api/v1/auth/register', {
@@ -36,7 +38,7 @@ const actions = {
       }
     } catch (error) {
       commit('setRegistering', false)
-      commit('setRegisterError', error.message)
+      commit('setRegisterError', error.response.data.error.errors)
     }
   }
 }
@@ -47,6 +49,7 @@ const getters = {
 }
 
 export default {
+  namespaced: true, // Add the namespaced property
   state,
   mutations,
   actions,
