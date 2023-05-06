@@ -26,7 +26,9 @@
             Sign up
           </button>
 
-          <h1>STATUS:{{ status }}</h1>
+
+
+          <p v-if="registerError">{{ registerError }}</p>
         </form>
       </div>
     </div>
@@ -36,6 +38,7 @@
 
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "RegisterView",
@@ -50,13 +53,12 @@ export default {
     }
   },
   computed: {
-    status() {
-      return this.$store.state.auth.status;
-    },
+    ...mapGetters('auth', ['registerError', 'isRegistering'])
   },
   methods: {
-    registerUser() {
-      this.$store.dispatch("auth/register", { username: this.username, email: this.email, password: this.password })
+    ...mapActions('auth', ['register']),
+    handleSubmit() {
+      this.register({ username: this.username, email: this.email, password: this.password })
     }
   }
 }
