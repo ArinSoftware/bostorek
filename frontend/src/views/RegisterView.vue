@@ -111,7 +111,16 @@ export default {
   methods: {
     ...mapActions('auth', ['register']),
     registerUser() {
-      this.register({ username: this.username, email: this.email, password: this.password })
+      this.register({ username: this.username, email: this.email, password: this.password }).then(() => {
+        // Registration successful
+        // Redirect to the LoginView.vue page
+        this.$router.push({ name: 'Login' });
+      })
+        .catch(error => {
+          // Registration failed
+          // Handle the error, display an error message, etc.
+          console.log("ERROR", error)
+        });
     }
   }
 }

@@ -6,14 +6,14 @@
 
     <div class="w-full bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-500 md:mt-0 sm:w-1/2 lg:w-1/3">
       <div class="p-8 space-y-4 md:space-y-6 sm:p-8">
-        <form class="space-y-8" action="#">
+        <form class="space-y-8" @submit.prevent="loginUser">
           <div>
-            <input type="email" name="email" id="email"
+            <input v-model="email" type="email" name="email" id="email"
               class="bg-bost-grey border border-gray-300 text-gray-900 sm:text-sm rounded-full block w-full p-2.5"
               placeholder="name@company.com" autocomplete="off">
           </div>
           <div>
-            <input type="password" name="password" id="password" placeholder="••••••••"
+            <input v-model="password" type="password" name="password" id="password" placeholder="••••••••"
               class="bg-bost-grey border border-gray-300 text-gray-900 sm:text-sm rounded-full block w-full p-2.5">
           </div>
           <button type="submit"
@@ -29,11 +29,31 @@
 
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: "LoginView",
   components: {
     SectionHeader
+  },
+  data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    ...mapActions('auth', ['login']),
+    submitForm() {
+      this.login({ email: this.email, password: this.password })
+        .then(() => {
+          // Handle successful login, e.g., navigate to a new page
+        })
+        .catch((error) => {
+          // Handle login error, e.g., display an error message
+          console.log(error);
+        });
+    }
   }
 }
 </script>
