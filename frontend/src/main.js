@@ -20,6 +20,10 @@ library.add(faTwitter)
 library.add(faInstagram)
 library.add(faYoutube)
 
+import Toast from 'vue-toastification'
+// Import the CSS or use your own!
+import 'vue-toastification/dist/index.css'
+
 const app = createApp(App)
 
-app.use(router).use(store).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+app.use(router).use(store).use(Toast).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

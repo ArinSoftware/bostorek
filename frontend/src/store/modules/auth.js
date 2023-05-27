@@ -24,8 +24,6 @@ const mutations = {
 
 const actions = {
   async register({ commit }, { username, email, password }) {
-    console.log('action register')
-
     commit('setRegisterError', null)
     commit('setRegistering', true)
 
@@ -44,7 +42,7 @@ const actions = {
       }
     } catch (error) {
       commit('setRegistering', false)
-      commit('setRegisterError', error.response.data.error.errors)
+      commit('setRegisterError', error.response.data.message)
     }
   },
 

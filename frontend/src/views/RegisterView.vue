@@ -55,6 +55,7 @@
 <script>
 import SectionHeader from '@/components/SectionHeader.vue';
 import { mapGetters, mapActions } from 'vuex'
+import { useToast } from 'vue-toastification';
 
 export default {
   name: "RegisterView",
@@ -114,14 +115,36 @@ export default {
       this.register({ username: this.username, email: this.email, password: this.password }).then(() => {
         // Registration successful
         // Redirect to the LoginView.vue page
-        this.$router.push({ name: 'Login' });
+
+        if (!this.registerError) {
+
+          // Show success toast message for 3 seconds
+          this.toast.success("Registration successful, you will be forwarded LOGIN page", {
+            timeout: 3000
+          })
+
+          // Delay the redirection until after the toast message disappears
+          setTimeout(() => {
+            this.$router.push({ name: 'Login' });
+          }, 3000);
+
+        } else {
+          // Show success toast message for 3 seconds
+          this.toast.error(`${this.registerError}`, {
+            timeout: 3000
+          })
+          this.email = "";
+          this.username = "";
+        }
       })
         .catch(error => {
-          // Registration failed
-          // Handle the error, display an error message, etc.
-          console.log("ERROR", error)
+          console.log(error)
         });
     }
+  },
+  created() {
+    // Create the toast instance
+    this.toast = useToast();
   }
 }
 </script>
