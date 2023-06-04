@@ -64,8 +64,6 @@ export default {
       menuItems: [
         { text: "Home", link: "/" },
         { text: "About", link: "/about" },
-        { text: "Books", link: "/books" },
-        { text: "Contact", link: "/contact" },
         { text: "Login", link: "/login" },
       ]
     }

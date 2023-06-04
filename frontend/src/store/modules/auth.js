@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const state = {
+  user: null,
   registerError: null,
   registering: false,
   loginError: null,
@@ -8,6 +9,9 @@ const state = {
 }
 
 const mutations = {
+  setUser(state, user) {
+    state.user = user
+  },
   setRegisterError(state, error) {
     state.registerError = error
   },
@@ -35,6 +39,9 @@ const actions = {
       })
 
       if (response.status === 201) {
+        const { token } = response.data
+        // Store the token in local storage or a cookie for future use
+        localStorage.setItem('token', token)
         commit('setRegistering', false)
       } else {
         const { error } = response.data
@@ -57,7 +64,8 @@ const actions = {
       })
 
       if (response.status === 200) {
-        // Handle successful login
+        const user = response.data.user // Assuming the backend response includes the user object
+        commit('setUser', user) // Store the user details in the Vuex store
       } else {
         const { error } = response.data
         throw new Error(error)
@@ -66,10 +74,27 @@ const actions = {
       commit('setLoggingIn', false)
       commit('setLoginError', error.response.data.error)
     }
+  },
+
+  async logout({ commit }) {
+    console.log('logout VUEX')
+    try {
+      const response = await axios.get('http://localhost:3000/api/v1/auth/logout')
+
+      if (response.status === 200) {
+        commit('setUser', null) // Clear the user details in the Vuex store
+      } else {
+        const { error } = response.data
+        throw new Error(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
 const getters = {
+  currentUser: (state) => state.user,
   registerError: (state) => state.registerError,
   isRegistering: (state) => state.registering,
   loginError: (state) => state.loginError,

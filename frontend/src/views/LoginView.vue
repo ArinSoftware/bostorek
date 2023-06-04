@@ -44,10 +44,10 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    submitForm() {
+    loginUser() {
       this.login({ email: this.email, password: this.password })
         .then(() => {
-          // Handle successful login, e.g., navigate to a new page
+          this.$router.push('/dashboard'); // Redirect to the dashboard route
         })
         .catch((error) => {
           // Handle login error, e.g., display an error message
