@@ -4,12 +4,17 @@ import Book from '../models/Book.js';
 import Comment from '../models/Comment.js';
 
 const isLoggedIn = async (req, res, next) => {
+  console.log('ISLLOGGEDIN');
+
   try {
     let token;
 
     const isTokenAvailable =
       req.headers.authorization &&
       req.headers.authorization.startsWith('Bearer ');
+
+    console.log('isTokenAvailable', isTokenAvailable);
+    console.log('req.cookies.token', req.cookies.token);
 
     if (!isTokenAvailable) {
       if (req.cookies.token) {

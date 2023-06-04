@@ -70,13 +70,12 @@ const login = async (req, res) => {
     // Generate a JWT token for the user
     const token = user.generateAuthToken();
 
-    res
-      .status(200)
-      .cookie('token', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
-      })
-      .json({ success: true, token });
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
+    res.status(200).json({ success: true, user });
   } catch (error) {
     res
       .status(500)
@@ -90,6 +89,7 @@ const login = async (req, res) => {
  * @access  Private
  **/
 const logout = async (req, res) => {
+  console.log('LOGOUT');
   try {
     // Invalidate the user's JWT token
     res
