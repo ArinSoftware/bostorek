@@ -57,11 +57,23 @@ const actions = {
     commit('setLoginError', null)
     commit('setLoggingIn', true)
 
+    console.log('login - auth.js')
+
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/auth/login', {
-        email,
-        password
-      })
+      const response = await axios.post(
+        'http://localhost:3000/api/v1/auth/login',
+        {
+          email,
+          password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+            // Add any other headers you need
+          },
+          withCredentials: true
+        }
+      )
 
       if (response.status === 200) {
         const user = response.data.user // Assuming the backend response includes the user object
@@ -77,9 +89,14 @@ const actions = {
   },
 
   async logout({ commit }) {
-    console.log('logout VUEX')
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/auth/logout')
+      const response = await axios.get('http://localhost:3000/api/v1/auth/logout', {
+        headers: {
+          'Content-Type': 'application/json'
+          // Add any other headers you need
+        },
+        withCredentials: true
+      })
 
       if (response.status === 200) {
         commit('setUser', null) // Clear the user details in the Vuex store

@@ -4,7 +4,7 @@ export default {
     items: []
   },
   mutations: {
-    setBooks(state, books) {
+    SET_BOOKS(state, books) {
       state.items = books
     }
   },
@@ -21,7 +21,7 @@ export default {
           return aDate > bDate ? -1 : 1
         })
 
-        commit('setBooks', sortedBooks)
+        commit('SET_BOOKS', sortedBooks)
       } catch (error) {
         console.log('Error fetching books:', error)
       }
