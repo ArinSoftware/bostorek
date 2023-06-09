@@ -1,38 +1,18 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
 import Book from '../models/Book.js';
 import Comment from '../models/Comment.js';
 
 const isLoggedIn = async (req, res, next) => {
-  console.log('ISLLOGGEDIN');
-
   try {
-    let token;
+    const token = req.cookies.token;
 
-    const isTokenAvailable =
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer ');
-
-    console.log('isTokenAvailable', isTokenAvailable);
-    console.log('req.cookies.token', req.cookies.token);
-
-    if (!isTokenAvailable) {
-      if (req.cookies.token) {
-        token = req.cookies.token;
-      } else {
-        return res.status(401).json({
-          success: false,
-          message: 'Unauthorized: No available token',
-        });
-      }
+    if (token) {
+      jwt.verify(token, process.env.JWT_SECRET_KEY, (err) => {
+        err ? res.redirect('/login') : next();
+      });
     } else {
-      token = req.headers.authorization.split(' ')[1];
+      res.redirect('/login');
     }
-
-    req.user = await User.findById(
-      jwt.verify(token, process.env.JWT_SECRET_KEY)._id
-    );
-    next();
   } catch (error) {
     return res
       .status(401)

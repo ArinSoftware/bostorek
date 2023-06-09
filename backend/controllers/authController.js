@@ -20,21 +20,11 @@ const register = async (req, res) => {
     // Create a new user and save it to the database
     const user = await User.create({ ...req.body });
 
-    // Create token
-    const token = user.generateAuthToken();
-
-    res
-      .status(201)
-      .cookie('jwt', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
-      })
-      .json({
-        success: true,
-        message: 'User registered successfully',
-        user,
-        token,
-      });
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      user,
+    });
   } catch (error) {
     res
       .status(500)
@@ -70,12 +60,13 @@ const login = async (req, res) => {
     // Generate a JWT token for the user
     const token = user.generateAuthToken();
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24,
-    });
-
-    res.status(200).json({ success: true, user });
+    res
+      .status(200)
+      .cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+      })
+      .json({ success: true, user });
   } catch (error) {
     res
       .status(500)
@@ -89,16 +80,13 @@ const login = async (req, res) => {
  * @access  Private
  **/
 const logout = async (req, res) => {
-  console.log('LOGOUT');
   try {
     // Invalidate the user's JWT token
     res
       .status(200)
       .cookie('token', '', {
-        httpOnly: true,
-        expires: new Date(0),
+        maxAge: 1,
       })
-
       .json({ success: true, message: 'User successfully logged out.' });
   } catch (error) {
     res

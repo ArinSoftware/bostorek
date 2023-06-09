@@ -8,16 +8,21 @@ import commentRoute from '../routes/commentRoute.js';
 
 const app = express();
 
+// Use the cookie-parser middleware
+app.use(cookieParser());
+
 app.use(morgan('dev'));
 
 //Enable All CORS Requests
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 // Use built-in middleware to parse JSON-encoded request bodies
 app.use(express.json());
-
-// Use the cookie-parser middleware
-app.use(cookieParser());
 
 //Routes
 app.use('/api/v1/comments', commentRoute);
