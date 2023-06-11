@@ -6,7 +6,7 @@
         class="absolute left-4 bottom-0 px-6 py-1 text-white bg-bost-blue rounded-full border-2 border-white flex justify-center items-center text-center transform translate-y-1/2">
         <h4 class="text-white text-lg font-semibold">
           <span>
-            {{ book.updatedAt }}
+            {{ formatDate(book.updatedAt) }}
           </span>
         </h4>
       </div>
@@ -27,11 +27,19 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: "BookItem",
   props: {
     book: Object
-  }
+  },
+  methods: {
+    formatDate(dateString) {
+      return moment(dateString).format('DD MMMM YYYY');
+    }
+
+  },
 }
 </script>
 

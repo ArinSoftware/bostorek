@@ -6,14 +6,18 @@
 
 <script>
 import BookItem from '@/components/books/BookItem.vue';
+import { mapGetters } from 'vuex';
+
 export default {
   name: "BookList",
   components: { BookItem },
   computed: {
+    ...mapGetters('book', ['getBooks']),
     books() {
-      return this.$store.state.book.items
-    }
+      return this.getBooks;
+    },
   },
+
   mounted() {
     this.$store.dispatch('book/fetchBooks')
   }

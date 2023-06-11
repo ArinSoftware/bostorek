@@ -26,5 +26,8 @@ export default {
         console.log('Error fetching books:', error)
       }
     }
+  },
+  getters: {
+    getBooks: (state) => state.items
   }
 }
