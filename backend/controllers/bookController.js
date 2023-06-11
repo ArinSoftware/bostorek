@@ -79,6 +79,8 @@ const getABook = async (req, res) => {
 const createBook = async (req, res) => {
   try {
     //add user id to req.body
+    console.log('req.body', req.body);
+    console.log('req.user', req.user);
     req.body.user = req.user._id;
 
     const book = await Book.create({ ...req.body });

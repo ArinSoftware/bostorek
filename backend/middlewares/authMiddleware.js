@@ -1,19 +1,27 @@
 import jwt from 'jsonwebtoken';
 import Book from '../models/Book.js';
 import Comment from '../models/Comment.js';
+import User from '../models/User.js';
 
 const isLoggedIn = async (req, res, next) => {
+  console.log('isLoggedIn');
   try {
     const token = req.cookies.token;
 
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET_KEY, (err) => {
-        err ? res.redirect('/login') : next();
-      });
-    } else {
-      res.redirect('/login');
+    if (!token) {
+      return res.redirect('/login');
+    }
+
+    try {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      req.user = await User.findById(decodedToken._id);
+      next();
+    } catch (err) {
+      console.error(err);
+      return res.redirect('/login');
     }
   } catch (error) {
+    console.error(error);
     return res
       .status(401)
       .json({ success: false, message: 'Unauthorized: Invalid token' });
