@@ -26,8 +26,12 @@ const getAllBooks = async (req, res) => {
 
 const getAllBooksByUser = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.params.userId;
     const books = await Book.find({ user: userId }).populate('user');
+
+    console.log('userId', userId);
+    console.log('books', books);
+
     res.status(200).json({
       success: true,
       message: 'get all books by user successfully',

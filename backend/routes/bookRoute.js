@@ -12,7 +12,7 @@ router
 
 // Endpoint to get all books related to the logged-in user
 router.get(
-  '/user',
+  '/user/:userId',
   authMiddleware.isLoggedIn,
   bookController.getAllBooksByUser
 );
