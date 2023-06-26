@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Welcome, {{ currentUser.username }}</h1>
+    <h1>Welcome, {{ currentUser }}</h1>
+    <p>{{ getUserBooks }}</p>
     <!-- Display other user details as needed -->
   </div>
 </template>
@@ -11,9 +12,13 @@ import { mapGetters } from 'vuex';
 export default {
   name: "DashboardView",
   computed: {
-    ...mapGetters('auth', ['currentUser'])
+    ...mapGetters('auth', ['currentUser']),
+    ...mapGetters('book', ['getUserBooks']),
   },
-}
+  created() {
+    this.$store.dispatch('book/fetchUserBooks');
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

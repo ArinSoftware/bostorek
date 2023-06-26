@@ -1,11 +1,15 @@
 export default {
   namespaced: true,
   state: {
-    items: []
+    books: [],
+    userBooks: []
   },
   mutations: {
     SET_BOOKS(state, books) {
-      state.items = books
+      state.books = books
+    },
+    SET_USER_BOOKS(state, userBooks) {
+      state.userBooks = userBooks
     }
   },
   actions: {
@@ -25,9 +29,32 @@ export default {
       } catch (error) {
         console.log('Error fetching books:', error)
       }
+    },
+    async fetchUserBooks({ commit, rootGetters }) {
+      try {
+        const userId = rootGetters['auth/currentUser']._id
+        const response = await fetch(`http://localhost:3000/api/v1/books/user/${userId}`, {
+          credentials: 'include'
+        })
+        const result = await response.json()
+
+        const sortedBooks = result.books.sort((a, b) => {
+          const aDate = new Date(a.createdAt)
+          const bDate = new Date(b.createdAt)
+
+          return aDate > bDate ? -1 : 1
+        })
+
+        console.log('sortedBooks', sortedBooks)
+
+        commit('SET_USER_BOOKS', sortedBooks)
+      } catch (error) {
+        console.log('Error fetching user books:', error)
+      }
     }
   },
   getters: {
-    getBooks: (state) => state.items
+    getBooks: (state) => state.books,
+    getUserBooks: (state) => state.userBooks
   }
 }
