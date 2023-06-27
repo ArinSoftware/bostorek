@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '../store/index.js'
+import Cookies from 'js-cookie'
 
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
@@ -21,6 +22,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('store.state', store.state)
+
+  let token = Cookies.get()
+  console.log('tokenxx', token)
+
   if (to.matched.some((route) => route.meta.requiresAuth)) {
     if (store.state.auth.user) {
       next()

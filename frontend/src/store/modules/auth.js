@@ -39,9 +39,6 @@ const actions = {
       })
 
       if (response.status === 201) {
-        const { token } = response.data
-        // Store the token in local storage or a cookie for future use
-        localStorage.setItem('token', token)
         commit('setRegistering', false)
       } else {
         const { error } = response.data
@@ -56,8 +53,6 @@ const actions = {
   async login({ commit }, { email, password }) {
     commit('setLoginError', null)
     commit('setLoggingIn', true)
-
-    console.log('login - auth.js')
 
     try {
       const response = await axios.post(

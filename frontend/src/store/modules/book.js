@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   namespaced: true,
   state: {
@@ -15,8 +17,8 @@ export default {
   actions: {
     async fetchBooks({ commit }) {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/books')
-        const result = await response.json()
+        const response = await axios.get('http://localhost:3000/api/v1/books')
+        const result = response.data
 
         const sortedBooks = result.books.sort((a, b) => {
           const aDate = new Date(a.createdAt)
@@ -33,10 +35,10 @@ export default {
     async fetchUserBooks({ commit, rootGetters }) {
       try {
         const userId = rootGetters['auth/currentUser']._id
-        const response = await fetch(`http://localhost:3000/api/v1/books/user/${userId}`, {
-          credentials: 'include'
+        const response = await axios.get(`http://localhost:3000/api/v1/books/user/${userId}`, {
+          withCredentials: true
         })
-        const result = await response.json()
+        const result = response.data
 
         const sortedBooks = result.books.sort((a, b) => {
           const aDate = new Date(a.createdAt)
