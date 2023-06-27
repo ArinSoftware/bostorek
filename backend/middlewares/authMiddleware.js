@@ -4,11 +4,8 @@ import Comment from '../models/Comment.js';
 import User from '../models/User.js';
 
 const isLoggedIn = async (req, res, next) => {
-  console.log('isLoggedIn');
   try {
     const token = req.cookies.token;
-
-    console.log('token', token);
 
     if (!token) {
       return res.redirect('/login');
